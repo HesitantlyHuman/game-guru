@@ -14,15 +14,15 @@ what happens if opponent shoots invalid spot, (bad index, already shot)
 how do we verify syncronization?
 
 
-B -> (G5) -> A
-STEPS:
-B -> Hash 3
-A: Sync_Candidate <- Sync_State XOR Hash 3
-A -> Sync_Candidate
-B: if Sync_Candidates match set Sync_State to Candidate
-B -> (G5)
-A -> Hit + Corresponding secret
-B: Verifies Commitment and Updates State
+
+STEPS to transfer B -> (G5) -> A:
+- B -> Hash 3
+- A: Sync_Candidate <- Sync_State XOR Hash 3
+- A -> Sync_Candidate
+- B: if Sync_Candidates match set Sync_State to Candidate
+- B -> (G5)
+- A -> Hit + Corresponding secret
+- B: Verifies Commitment and Updates State
 
 connect to another player - Just use WebRTC
 
