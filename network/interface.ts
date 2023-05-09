@@ -1,15 +1,17 @@
 import { Message, Commitment, Revelation, MessageType } from "./protocol";
 
-interface BattleshipCommunicator {}
+interface BattleshipCommunicator { }
 
 interface Cell {
   row: number;
   col: number;
 }
 
-interface Shot {
-  cell: Cell;
-  result: ShotResult;
+enum ShotResult {
+  hit,
+  miss,
+  invalid,
+  inconsistent,
 }
 
 interface Board {
@@ -18,15 +20,12 @@ interface Board {
   results: [ShotResult];
 }
 
-enum ShotResult {
-  hit,
-  miss,
-  invalid,
-}
-
 const Board = {
-  commit_to_board(board: Board) {
+  commit_to_board(board: Board): Promise<void> {
     const commitments = Board.to_commitments(board);
+    return new Promise<void>((resolve, reject) => {
+      resolve();
+    });
   },
   to_commitments(
     board: Board
@@ -58,7 +57,7 @@ const Board = {
 function make_commitments(
   connection,
   commitments: { [key: string]: Commitment }
-) {}
+) { }
 
 function send_shot(connection, shot): Promise<ShotResult> {
   return new Promise<ShotResult>((resolve, reject) => {
@@ -72,4 +71,4 @@ function get_shot(connection): Promise<Cell> {
   });
 }
 
-function reveal_commitments(connection, keys: [string]) {}
+function reveal_commitments(connection, keys: [string]) { }

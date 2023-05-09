@@ -1,7 +1,7 @@
-interface Connection {
-  rtc: RTCPeerConnection;
-  channel: RTCDataChannel;
-}
+// interface Connection {
+//   rtc: RTCPeerConnection;
+//   channel: RTCDataChannel;
+// }
 
 const rtc_config: RTCConfiguration = {
   iceServers: [
