@@ -2,6 +2,8 @@
     --unselected_radius: 50%;
     --selected_radius: 10%;
     --hover_radius: 0%;
+    --default_background: #ccc;
+    --body_background: #fff;
 }
 /*
 How border radius works
@@ -9,43 +11,43 @@ https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius
 */
 
 * {
-margin:0;
-padding:0;
+    margin:0;
+    padding:0;
 }
 
 
 .wrapper {
-margin-left:20%; 
-margin-top:2em;
+    margin-left:20%; 
+    margin-top:2em;
     display:block;
 }
 
 ul {
-list-style:none;
-display:inline-block;
+    list-style:none;
+    display:inline-block;
 }
 
 .dot,
 ul li {
-width:2em;
-height:2em;
-margin:5px;
+    width:2em;
+    height:2em;
+    margin:5px;
 }
 
 .dot {
-background:#ccc;
-border-radius: var(--unselected_radius);
+    background: var(--default_background);
+    border-radius: var(--unselected_radius);
     cursor:pointer;
-    -webkit-transition:all 1.5s ease;
+    /* -webkit-transition:all 1.5s ease;
     -moz-transition:all 1.5s ease; 
     -o-transition:all 1.5s ease; 
-    transition:all 1.5s ease;
-
+    transition:all 1.5s ease; */
+    /* TODO, ditch transistion time? */
 }
 
 
 body{
-    background:#fff;
+    background: --body_background;
     animation:bgfade 5s;
     -webkit-animation:bgfade 5s; /* Safari and Chrome */}
 
