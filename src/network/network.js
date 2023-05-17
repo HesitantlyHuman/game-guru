@@ -1,3 +1,8 @@
+"use strict";
+// interface Connection {
+//   rtc: RTCPeerConnection;
+//   channel: RTCDataChannel;
+// }
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,13 +39,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var ShotResult;
-(function (ShotResult) {
-    ShotResult[ShotResult["hit"] = 0] = "hit";
-    ShotResult[ShotResult["miss"] = 1] = "miss";
-    ShotResult[ShotResult["invalid"] = 2] = "invalid";
-})(ShotResult || (ShotResult = {}));
-var rtc_config = {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.accept_answer = exports.create_answer = exports.create_offer = exports.establish_data_channel = exports.RTC_CONFIG = void 0;
+exports.RTC_CONFIG = {
     iceServers: [
         {
             urls: "stun:a.relay.metered.ca:80",
@@ -58,15 +59,6 @@ var rtc_config = {
     ],
 };
 var DATA_CHANNEL_LABEL = "battleship";
-function handle_datachannel_connection(event) {
-    console.log("datachannel connected");
-}
-function handle_disconnect(event) {
-    console.log("datachannel disconnected");
-}
-function handle_message(event) {
-    console.log("received message:", event.data);
-}
 function establish_data_channel(connection, create_channel) {
     var _this = this;
     if (create_channel === void 0) { create_channel = true; }
@@ -88,10 +80,7 @@ function establish_data_channel(connection, create_channel) {
                     channel_1 = _a.sent();
                     _a.label = 3;
                 case 3:
-                    channel_1.onmessage = handle_message;
-                    channel_1.onclose = handle_disconnect;
                     channel_1.onopen = function (event) {
-                        handle_datachannel_connection(event);
                         resolve(channel_1);
                     };
                     return [3 /*break*/, 5];
@@ -104,6 +93,7 @@ function establish_data_channel(connection, create_channel) {
         });
     }); });
 }
+exports.establish_data_channel = establish_data_channel;
 function create_offer(prospective_connection) {
     var _this = this;
     return new Promise(function (resolve, reject) { return __awaiter(_this, void 0, void 0, function () {
@@ -133,6 +123,7 @@ function create_offer(prospective_connection) {
         });
     }); });
 }
+exports.create_offer = create_offer;
 function create_answer(prospective_connection, offer) {
     var _this = this;
     var session_description = new RTCSessionDescription(JSON.parse(offer));
@@ -165,46 +156,39 @@ function create_answer(prospective_connection, offer) {
         });
     }); });
 }
+exports.create_answer = create_answer;
 function accept_answer(prospective_connection, answer) {
     prospective_connection.setRemoteDescription(new RTCSessionDescription(JSON.parse(answer)));
 }
-function make_commitments(connection, commitments) { }
-function send_shot(connection, shot) {
-    return new Promise(function (resolve, reject) {
-        resolve(ShotResult.hit);
-    });
-}
-function get_shot(connection) {
-    return new Promise(function (resolve, reject) {
-        resolve({ row: 0, col: 0 });
-    });
-}
-function reveal_commitments(connection, keys) { }
-var connection_one = new RTCPeerConnection(rtc_config);
-var connection_two = new RTCPeerConnection(rtc_config);
-var connection_one_channel_promise = establish_data_channel(connection_one);
-var connection_two_channel_promise = establish_data_channel(connection_two, false);
-create_offer(connection_one)
-    .then(function (offer) {
-    create_answer(connection_two, offer).then(function (answer) {
-        accept_answer(connection_one, answer);
-    });
-})
-    .then(function () {
-    Promise.all([
-        connection_one_channel_promise,
-        connection_two_channel_promise,
-    ]).then(function (channels) {
-        var channel_one = channels[0];
-        var channel_two = channels[1];
-        channel_one.send("hello");
-        channel_two.send("world");
-    });
-});
-// Close the connections after 3 seconds
-setTimeout(function () {
-    connection_one.close();
-    connection_two.close();
-    console.log("all done");
-}, 5000);
+exports.accept_answer = accept_answer;
+// let connection_one = new RTCPeerConnection(rtc_config);
+// let connection_two = new RTCPeerConnection(rtc_config);
+// let connection_one_channel_promise = establish_data_channel(connection_one);
+// let connection_two_channel_promise = establish_data_channel(
+//   connection_two,
+//   false
+// );
+// create_offer(connection_one)
+//   .then((offer) => {
+//     create_answer(connection_two, offer).then((answer) => {
+//       accept_answer(connection_one, answer);
+//     });
+//   })
+//   .then(() => {
+//     Promise.all([
+//       connection_one_channel_promise,
+//       connection_two_channel_promise,
+//     ]).then((channels) => {
+//       let channel_one = channels[0];
+//       let channel_two = channels[1];
+//       channel_one.send("hello");
+//       channel_two.send("world");
+//     });
+//   });
+// // Close the connections after 3 seconds
+// setTimeout(() => {
+//   connection_one.close();
+//   connection_two.close();
+//   console.log("all done");
+// }, 5000);
 //# sourceMappingURL=network.js.map

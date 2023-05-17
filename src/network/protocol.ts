@@ -9,28 +9,20 @@ enum MessageType {
   revelation,
 }
 
-interface Commitment {
+export type Commitment = {
   id: string;
   hash: ArrayBuffer;
 }
 
-function instanceofCommitment(object: any): object is Commitment {
-  return "id" in object && "hash" in object;
-}
-
-interface Revelation {
+export type Revelation = {
   id: string;
   secret: ArrayBuffer;
   message: string;
 }
 
-function instanceofRevelation(object: any): object is Revelation {
-  return "id" in object && "secret" in object && "message" in object;
-}
+export type Message = Commitment | Revelation | string;
 
-type Message = Commitment | Revelation | string;
-
-const Commitment = {
+export const Commitment = {
   new(id: string, data: string): Promise<[Commitment, Revelation]> {
     return new Promise<[Commitment, Revelation]>((resolve, reject) => {
       const secret = crypto.getRandomValues(new Uint8Array(SECRET_LENGTH));
@@ -38,7 +30,7 @@ const Commitment = {
       const hash_content = new Uint8Array(secret.length + data_bytes.length);
       hash_content.set(secret);
       hash_content.set(data_bytes, secret.length);
-      const hash = crypto.subtle
+      crypto.subtle
         .digest("SHA-512", hash_content)
         .then((hash) => {
           const commitment: Commitment = {
@@ -76,9 +68,12 @@ const Commitment = {
       hash: hash_bytes,
     };
   },
+  is_instance(object: any): object is Commitment {
+    return "id" in object && "hash" in object;
+  }
 };
 
-const Revelation = {
+export const Revelation = {
   encode(revelation: Revelation): ArrayBuffer {
     const id_array = text_encoder.encode(revelation.id);
     const secret_array = new Uint8Array(revelation.secret);
@@ -134,9 +129,12 @@ const Revelation = {
         });
     });
   },
+  is_instance(object: any): object is Revelation {
+    return "id" in object && "secret" in object && "message" in object;
+  }
 };
 
-const Message = {
+export const Message = {
   encode(message: Message): ArrayBuffer {
     if (typeof message === "string") {
       const text_bytes = text_encoder.encode(message).buffer;
@@ -144,13 +142,13 @@ const Message = {
       message_bytes.set([MessageType.clear]);
       message_bytes.set(new Uint8Array(text_bytes), 1);
       return message_bytes.buffer;
-    } else if (instanceofCommitment(message)) {
+    } else if (Commitment.is_instance(message)) {
       const commitment_bytes = Commitment.encode(message);
       const message_bytes = new Uint8Array(1 + commitment_bytes.byteLength);
       message_bytes.set([MessageType.commitment]);
       message_bytes.set(new Uint8Array(commitment_bytes), 1);
       return message_bytes.buffer;
-    } else if (instanceofRevelation(message)) {
+    } else if (Revelation.is_instance(message)) {
       const revelation_bytes = Revelation.encode(message);
       const message_bytes = new Uint8Array(1 + revelation_bytes.byteLength);
       message_bytes.set([MessageType.revelation]);
@@ -170,11 +168,10 @@ const Message = {
     } else if (message_type == MessageType.revelation) {
       return Revelation.decode(message_bytes);
     } else {
+      console.log(message_buffer);
       throw new Error(
         "TypeError: Invalid message type: " + message_type + ", cannot decode"
       );
     }
   },
 };
-
-export { Commitment, Revelation, Message, MessageType };

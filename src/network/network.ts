@@ -3,7 +3,7 @@
 //   channel: RTCDataChannel;
 // }
 
-const rtc_config: RTCConfiguration = {
+export const RTC_CONFIG: RTCConfiguration = {
   iceServers: [
     {
       urls: "stun:a.relay.metered.ca:80",
@@ -23,15 +23,17 @@ const rtc_config: RTCConfiguration = {
 
 const DATA_CHANNEL_LABEL = "battleship";
 
-function establish_data_channel(
+export function establish_data_channel(
   connection: RTCPeerConnection,
   create_channel: boolean = true
 ): Promise<RTCDataChannel> {
   return new Promise<RTCDataChannel>(async (resolve, reject) => {
     try {
-      let channel;
+      let channel: RTCDataChannel;
       if (create_channel) {
-        channel = connection.createDataChannel(DATA_CHANNEL_LABEL);
+        channel = connection.createDataChannel(DATA_CHANNEL_LABEL, {
+          ordered: true
+        });
       } else {
         channel = await new Promise<RTCDataChannel>((resolve, reject) => {
           connection.ondatachannel = (event) => {
@@ -39,6 +41,7 @@ function establish_data_channel(
           };
         });
       }
+      channel.binaryType = "arraybuffer";
       channel.onopen = (event) => {
         resolve(channel);
       };
@@ -48,7 +51,7 @@ function establish_data_channel(
   });
 }
 
-function create_offer(
+export function create_offer(
   prospective_connection: RTCPeerConnection
 ): Promise<string> {
   return new Promise<string>(async (resolve, reject) => {
@@ -66,7 +69,7 @@ function create_offer(
   });
 }
 
-function create_answer(
+export function create_answer(
   prospective_connection: RTCPeerConnection,
   offer: string
 ): Promise<string> {
@@ -88,7 +91,7 @@ function create_answer(
   });
 }
 
-function accept_answer(
+export function accept_answer(
   prospective_connection: RTCPeerConnection,
   answer: string
 ) {
@@ -97,36 +100,36 @@ function accept_answer(
   );
 }
 
-let connection_one = new RTCPeerConnection(rtc_config);
-let connection_two = new RTCPeerConnection(rtc_config);
+// let connection_one = new RTCPeerConnection(rtc_config);
+// let connection_two = new RTCPeerConnection(rtc_config);
 
-let connection_one_channel_promise = establish_data_channel(connection_one);
-let connection_two_channel_promise = establish_data_channel(
-  connection_two,
-  false
-);
+// let connection_one_channel_promise = establish_data_channel(connection_one);
+// let connection_two_channel_promise = establish_data_channel(
+//   connection_two,
+//   false
+// );
 
-create_offer(connection_one)
-  .then((offer) => {
-    create_answer(connection_two, offer).then((answer) => {
-      accept_answer(connection_one, answer);
-    });
-  })
-  .then(() => {
-    Promise.all([
-      connection_one_channel_promise,
-      connection_two_channel_promise,
-    ]).then((channels) => {
-      let channel_one = channels[0];
-      let channel_two = channels[1];
-      channel_one.send("hello");
-      channel_two.send("world");
-    });
-  });
+// create_offer(connection_one)
+//   .then((offer) => {
+//     create_answer(connection_two, offer).then((answer) => {
+//       accept_answer(connection_one, answer);
+//     });
+//   })
+//   .then(() => {
+//     Promise.all([
+//       connection_one_channel_promise,
+//       connection_two_channel_promise,
+//     ]).then((channels) => {
+//       let channel_one = channels[0];
+//       let channel_two = channels[1];
+//       channel_one.send("hello");
+//       channel_two.send("world");
+//     });
+//   });
 
-// Close the connections after 3 seconds
-setTimeout(() => {
-  connection_one.close();
-  connection_two.close();
-  console.log("all done");
-}, 5000);
+// // Close the connections after 3 seconds
+// setTimeout(() => {
+//   connection_one.close();
+//   connection_two.close();
+//   console.log("all done");
+// }, 5000);

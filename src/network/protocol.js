@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Message = exports.Revelation = exports.Commitment = void 0;
 var text_encoder = new TextEncoder();
 var text_decoder = new TextDecoder();
 var SECRET_LENGTH = 16;
@@ -8,13 +11,7 @@ var MessageType;
     MessageType[MessageType["commitment"] = 1] = "commitment";
     MessageType[MessageType["revelation"] = 2] = "revelation";
 })(MessageType || (MessageType = {}));
-function instanceofCommitment(object) {
-    return "id" in object && "hash" in object;
-}
-function instanceofRevelation(object) {
-    return "id" in object && "secret" in object && "message" in object;
-}
-var Commitment = {
+exports.Commitment = {
     new: function (id, data) {
         return new Promise(function (resolve, reject) {
             var secret = crypto.getRandomValues(new Uint8Array(SECRET_LENGTH));
@@ -22,7 +19,7 @@ var Commitment = {
             var hash_content = new Uint8Array(secret.length + data_bytes.length);
             hash_content.set(secret);
             hash_content.set(data_bytes, secret.length);
-            var hash = crypto.subtle
+            crypto.subtle
                 .digest("SHA-512", hash_content)
                 .then(function (hash) {
                 var commitment = {
@@ -58,8 +55,11 @@ var Commitment = {
             hash: hash_bytes,
         };
     },
+    is_instance: function (object) {
+        return "id" in object && "hash" in object;
+    }
 };
-var Revelation = {
+exports.Revelation = {
     encode: function (revelation) {
         var id_array = text_encoder.encode(revelation.id);
         var secret_array = new Uint8Array(revelation.secret);
@@ -108,8 +108,11 @@ var Revelation = {
             });
         });
     },
+    is_instance: function (object) {
+        return "id" in object && "secret" in object && "message" in object;
+    }
 };
-var Message = {
+exports.Message = {
     encode: function (message) {
         if (typeof message === "string") {
             var text_bytes = text_encoder.encode(message).buffer;
@@ -118,15 +121,15 @@ var Message = {
             message_bytes.set(new Uint8Array(text_bytes), 1);
             return message_bytes.buffer;
         }
-        else if (instanceofCommitment(message)) {
-            var commitment_bytes = Commitment.encode(message);
+        else if (exports.Commitment.is_instance(message)) {
+            var commitment_bytes = exports.Commitment.encode(message);
             var message_bytes = new Uint8Array(1 + commitment_bytes.byteLength);
             message_bytes.set([MessageType.commitment]);
             message_bytes.set(new Uint8Array(commitment_bytes), 1);
             return message_bytes.buffer;
         }
-        else if (instanceofRevelation(message)) {
-            var revelation_bytes = Revelation.encode(message);
+        else if (exports.Revelation.is_instance(message)) {
+            var revelation_bytes = exports.Revelation.encode(message);
             var message_bytes = new Uint8Array(1 + revelation_bytes.byteLength);
             message_bytes.set([MessageType.revelation]);
             message_bytes.set(new Uint8Array(revelation_bytes), 1);
@@ -143,34 +146,14 @@ var Message = {
             return text_decoder.decode(message_bytes);
         }
         else if (message_type == MessageType.commitment) {
-            return Commitment.decode(message_bytes);
+            return exports.Commitment.decode(message_bytes);
         }
         else if (message_type == MessageType.revelation) {
-            return Revelation.decode(message_bytes);
+            return exports.Revelation.decode(message_bytes);
         }
         else {
             throw new Error("TypeError: Invalid message type: " + message_type + ", cannot decode");
         }
     },
 };
-var data_to_commit_to = "Hello, world!";
-var commitment_id = "commitment_id";
-Commitment.new(commitment_id, data_to_commit_to).then(function (_a) {
-    var commitment = _a[0], revelation = _a[1];
-    var commitment_buffer = Commitment.encode(commitment);
-    var revelation_buffer = Revelation.encode(revelation);
-    var message_buffer = Message.encode(commitment);
-    var commitment_decoded = Commitment.decode(commitment_buffer);
-    var revelation_decoded = Revelation.decode(revelation_buffer);
-    var message_decoded = Message.decode(message_buffer);
-    console.log(commitment_buffer);
-    console.log(revelation_buffer);
-    console.log(message_buffer);
-    console.log(commitment_decoded);
-    console.log(revelation_decoded);
-    console.log(message_decoded);
-    Revelation.verify(revelation, commitment).then(function (verified) {
-        console.log(verified);
-    });
-});
 //# sourceMappingURL=protocol.js.map

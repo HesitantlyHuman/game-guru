@@ -1,0 +1,32 @@
+{
+  "name": "game-guru",
+  "version": "1.0.0",
+  "description": "Cheating resistant P2P games",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "npm run build:copy && webpack --mode=production",
+    "build:copy": "cp src/index.html dist/index.html",
+    "start": "npm run build:copy && webpack serve --mode=development --open",
+    "dev": "npm run build:copy && webpack --mode=development --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HesitantlyHuman/game-guru.git"
+  },
+  "keywords": [
+    "P2P",
+    "Cryptography",
+    "WebRTC"
+  ],
+  "author": "HesitantlyHuman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HesitantlyHuman/game-guru/issues"
+  },
+  "homepage": "https://github.com/HesitantlyHuman/game-guru#readme",
+  "devDependencies": {
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "webpack-cli": "^5.1.1"
+  }
+}
