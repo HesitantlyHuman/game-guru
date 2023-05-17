@@ -1,9 +1,12 @@
 :root {
     --unselected_radius: 50%;
-    --selected_radius: 10%;
     --hover_radius: 0%;
+    --selected_radius: 10%;
+
     --default_background: #ccc;
     --body_background: #fff;
+    --hover_background: #20B2AA;
+    --hover_outline: red;
 }
 /*
 How border radius works
@@ -38,13 +41,19 @@ ul li {
     background: var(--default_background);
     border-radius: var(--unselected_radius);
     cursor:pointer;
-    /* -webkit-transition:all 1.5s ease;
-    -moz-transition:all 1.5s ease; 
-    -o-transition:all 1.5s ease; 
-    transition:all 1.5s ease; */
+    /* -webkit-transition:all 0.5s ease;
+    -moz-transition:all 0.5s ease; 
+    -o-transition:all 0.5s ease; 
+    transition:all 0.5s ease; */
     /* TODO, ditch transistion time? */
 }
 
+.dot:hover {
+    background: var(--hover_background);
+    border-radius: var(--hover_radius);
+    outline-style: solid;
+    outline-color: var(--hover_outline);
+}
 
 body{
     background: --body_background;
