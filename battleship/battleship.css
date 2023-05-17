@@ -32,8 +32,6 @@ height:2em;
 margin:5px;
 }
 
-
-
 .dot {
 background:#ccc;
 border-radius: var(--unselected_radius);
