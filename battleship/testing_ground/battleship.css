@@ -3,8 +3,8 @@
     --hover_radius: 0%;
     --selected_radius: 10%;
 
-    --default_background: #ccc;
-    --body_background: #fff;
+    --dot_background: #ccc;
+    --body_background: #3f3a3a;
     --hover_background: #20B2AA;
     --hover_outline: red;
 }
@@ -13,32 +13,37 @@ How border radius works
 https://developer.mozilla.org/en-US/docs/Web/CSS/border-radius 
 */
 
-* {
+*
+{
     margin:0;
     padding:0;
 }
 
 
-.wrapper {
+.wrapper
+{
     margin-left:20%; 
     margin-top:2em;
     display:block;
 }
 
-ul {
+ul
+{
     list-style:none;
     display:inline-block;
 }
 
 .dot,
-ul li {
+ul li
+{
     width:2em;
     height:2em;
     margin:5px;
 }
 
-.dot {
-    background: var(--default_background);
+.dot
+{
+    background: var(--dot_background);
     border-radius: var(--unselected_radius);
     cursor:pointer;
     /* -webkit-transition:all 0.5s ease;
@@ -48,32 +53,35 @@ ul li {
     /* TODO, ditch transistion time? */
 }
 
-.dot:hover {
+.dot:hover
+{
     background: var(--hover_background);
     border-radius: var(--hover_radius);
     outline-style: solid;
     outline-color: var(--hover_outline);
 }
 
-body{
-    background: --body_background;
+body
+{
+    background: var(--body_background);
     animation:bgfade 5s;
-    -webkit-animation:bgfade 5s; /* Safari and Chrome */}
+    -webkit-animation:bgfade 5s; /* Safari and Chrome */
+}
 
 @keyframes bgfade
 {
-0%   {opacity:0;}
-25%  {opacity:0.25;}
-50%  {opacity:0.5;}
-75%  {opacity:0.75;}
-100% {opacity:1;}
+    0%   {opacity:0;}
+    25%  {opacity:0.25;}
+    50%  {opacity:0.5;}
+    75%  {opacity:0.75;}
+    100% {opacity:1;}
 }
 
 @-webkit-keyframes bgfade /* Safari and Chrome */
 {
-0%   {opacity:0;}
-25%  {opacity:0.25;}
-50%  {opacity:0.5;}
-75%  {opacity:0.75;}
-100% {opacity:1;}
+    0%   {opacity:0;}
+    25%  {opacity:0.25;}
+    50%  {opacity:0.5;}
+    75%  {opacity:0.75;}
+    100% {opacity:1;}
 }
