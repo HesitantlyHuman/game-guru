@@ -1,4 +1,5 @@
-:root {
+:root
+{
     --unselected_radius: 50%;
     --hover_radius: 0%;
     --selected_radius: 10%;
