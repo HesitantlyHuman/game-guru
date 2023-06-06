@@ -1,6 +1,11 @@
 <script>
     export let row;
     export let col;
+
+    function handleClick()
+    {
+        // TODO, make this querry the menu
+    }
 </script>
 
 <style>
@@ -36,4 +41,4 @@
     }
 </style>
 
-<li class = "dot"></li>
+<li class = "dot" on:click={handleClick}></li>

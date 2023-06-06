@@ -34,10 +34,11 @@
 </style>
 
 <div class = "grid_wrapper">
-    {#each {length: cols} as _, col}
+    <!-- {#each {length: {cols}} as _, col} -->
+    {#each Array({cols}) as _, col}
         <!-- Should I use Array({cols}) instead of length? What's the speed difference. TODO -->
         <ul>
-            {#each {length: rows}  as _, row}
+            {#each {length: {rows}}  as _, row}
                 <Tile row={row}, col={col}/>
             {/each}
         </ul>

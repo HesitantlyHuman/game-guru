@@ -1,5 +1,6 @@
 <script>
 	import Grid from "./grid.svelte";
+    import Menu from "./menu.svelte";
 
 	const r = 10;
 	const c = 10; // TODO, make this dynamic eventually
@@ -14,5 +15,5 @@
 	<h2>Welcome to the warzone commander</h2>
 
 	<Grid rows={r}, cols={c}/>
-
+	<Menu />
 </main>
