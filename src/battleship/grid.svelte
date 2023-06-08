@@ -1,8 +1,8 @@
 <script>
 	import Tile from "./tile.svelte";
 
-	export let rows;
-	export let cols; // TODO, make this dynamic eventually
+	export let rows: number;
+	export let cols: number; // TODO, make this dynamic eventually
 </script>
 
 <style>
