@@ -1,12 +1,14 @@
 <script>
-    export let row;
-    export let col;
-
-    function handleClick()
-    {
-        // TODO, make this querry the menu
-    }
+	export let click_handler;
+	export let is_selected;
+	
+	function handle_click()
+	{
+		click_handler();
+	}
 </script>
+
+<button class = {is_selected? "selected": "unselected"} on:click={handle_click}></button>
 
 <style>
     :root
@@ -18,10 +20,10 @@
         --default_background: #ccc;
         --body_background: #3f3a3a;
         --hover_background: #20B2AA;
-        --hover_outline: red;
+        --hover_outline_color: red;
     }
 
-    .dot
+    .unselected
     {
         width:2em;
         height:2em;
@@ -32,13 +34,29 @@
         cursor:pointer;
     }
 
-    .dot:hover
+    .unselected:hover
     {
         background: var(--hover_background);
         border-radius: var(--hover_radius);
+			
         outline-style: solid;
-        outline-color: var(--hover_outline);
+        outline-color: var(--hover_outline_color);
     }
-</style>
+	
+	.selected
+    {
+        width:2em;
+        height:2em;
+        margin:5px;
 
-<li class = "dot" on:click={handleClick}></li>
+        background: blue;
+        border-radius: var(--selected_radius);
+        cursor:pointer;
+    }
+	
+	.selected:hover
+	{
+		outline-style: solid;
+    outline-color: var(--hover_outline_color);
+	}
+</style>
