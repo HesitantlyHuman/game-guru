@@ -2,8 +2,7 @@
 	export let click_handler;
 	export let is_selected;
 	
-	function handle_click()
-	{
+	function handle_click(){
 		click_handler();
 	}
 </script>
@@ -11,11 +10,10 @@
 <button class = {is_selected? "selected": "unselected"} on:click={handle_click}></button>
 
 <style>
-    :root
-    {
+    :root{
         --unselected_radius: 50%;
-        --hover_radius: 0%;
-        --selected_radius: 10%;
+        --hover_radius: 20%;
+        --selected_radius: 0%;
 
         --default_background: #ccc;
         --body_background: #3f3a3a;
@@ -23,8 +21,7 @@
         --hover_outline_color: red;
     }
 
-    .unselected
-    {
+    .unselected{
         width:2em;
         height:2em;
         margin:5px;
@@ -34,8 +31,7 @@
         cursor:pointer;
     }
 
-    .unselected:hover
-    {
+    .unselected:hover{
         background: var(--hover_background);
         border-radius: var(--hover_radius);
 			
@@ -43,8 +39,7 @@
         outline-color: var(--hover_outline_color);
     }
 	
-	.selected
-    {
+	.selected{
         width:2em;
         height:2em;
         margin:5px;
@@ -52,10 +47,9 @@
         background: blue;
         border-radius: var(--selected_radius);
         cursor:pointer;
-    }
+   }
 	
-	.selected:hover
-	{
+	.selected:hover{
 		outline-style: solid;
     outline-color: var(--hover_outline_color);
 	}

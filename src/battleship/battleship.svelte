@@ -1,23 +1,28 @@
 <script>
 	import Grid from "./grid.svelte";
-	import Menu from "./menu.svelte";
+  import Menu from "./menu.svelte";
 
-	const r = 5;
-	const c = 6; // TODO, make this dynamic eventually
+	const r = 2;
+	const c = 4; // TODO, make this dynamic eventually
 	
 	let current_selected;
 </script>
 
-<!-- <style>
-
-</style> -->
-
 <main>
-	<h1>Battleship Galactica</h1>
-	<h2>Welcome to the warzone commander</h2>
+<!-- 	<h1>Battleship Galactica</h1>
+	<h2>Welcome to the warzone commander</h2> -->
 	
-	<button>Rows</button>
-	<button>Columns</button>
-	<Grid rows={r} cols={c} bind:current_selected={current_selected}/>
+<!-- 	<form>
+		<label for='foo'>Rows</label>
+		<input id="foo" type="text">
+	</form>
+	
+	<label>
+		<input id="User" name="Name" type="text" />
+	</label>
+	<input> -->
+	
+	<Grid rows={r} cols={c} reshape='true' resize='true' bind:current_selected={current_selected}/>
 	<Menu current_selected={current_selected}/>
+	<Grid/>
 </main>
