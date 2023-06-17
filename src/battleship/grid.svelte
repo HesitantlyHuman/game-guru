@@ -7,7 +7,7 @@
 	
 	// control variables
 	export let rows;
-	export let cols; // TODO, make this dynamic eventually
+	export let cols;
 	export let reshape = false;
 	export let resize = false;
 	
@@ -17,6 +17,7 @@
 	let selected_state = []; // selected_state is referenced [col][row] TODO change to is_selected
 	
 	function click_tile(row, col){
+		console.log(rows);
 		// Change selected_state and current_selected
 		if (selected_state[col][row]){
 			current_selected = null;
@@ -39,9 +40,9 @@
 	{#if reshape}
 		<div class="reshape">
 			<span>Rows</span>
-			<input type="number" min="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+			<input bind:value={rows} type="number" min="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
 			<span>Cols</span>
-			<input type="number" min="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+			<input bind:value={cols} type="number" min="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
 		</div>
 	{/if}
 	
@@ -54,9 +55,11 @@
 </div>
 
 <div class = "grid_wrapper">
-	{#each Array(selected_state.length) as _, col}
+<!-- 	{#each Array(selected_state.length) as _, col} -->
+	{#each selected_state as _, col}
 		<ul class = "columns">
-			{#each Array(selected_state[col].length) as _, row}
+<!-- 			{#each Array(selected_state[col].length) as _, row} -->
+			{#each selected_state[col] as _, row}
 				<Tile click_handler={() =>{click_tile(row, col)}} is_selected={selected_state[col][row]}/>
 			{/each}
 		</ul>
