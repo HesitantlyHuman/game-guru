@@ -22,3 +22,19 @@
 		</div>
 	{/if}
 </div>
+
+<style>
+	.options_wrapper, .reshape, .resize{
+		display: flex;
+	}
+
+	.reshape, .resize{
+		flex: 1 1;
+		align-items: center;
+		/*background: var(--grid_background);*/ /*TODO same colors? Also, background vs background-color*/
+	}
+
+	input[type="number"] {
+	width: 60px;
+	}
+</style>

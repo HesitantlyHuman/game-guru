@@ -60,16 +60,6 @@
         --grid_background: #3f3a3a;
     }
 
-		.options_wrapper, .reshape, .resize{
-			display: flex;
-		}
-	
-		.reshape, .resize{
-			flex: 1 1;
-			align-items: center;
-			/*background: var(--grid_background);*/ /*TODO same colors? Also, background vs background-color*/
-		}
-
     .grid_wrapper{
         /* margin-left:20%;*/
         margin-top:0.3em;
@@ -91,10 +81,6 @@
 	
 	.columns{
 	/* TODO make column style */
-	}
-	
-	input[type="number"] {
-		width: 60px;
 	}
 </style>
 <!-- https://www.w3docs.com/snippets/html/how-to-allow-only-positive-numbers-in-the-input-number-type.html -->

@@ -18,8 +18,8 @@
 	<h1>Battleship Galactica</h1>
 	<h2>Welcome to the warzone commander!</h2>
 	
-	<Shaper/>
-	<Grid bind:rows={r} bind:cols={c} reshape='true' resize='true' bind:current_selected={top_selected}/>
+	<Shaper bind:rows={r} bind:cols={c} reshape='true' resize='true'/>
+	<Grid rows={r} cols={c} bind:current_selected={top_selected}/>
 	<Menu current_selected={top_selected}/>
 	<Grid rows={r} cols={c}/>
 </main>
