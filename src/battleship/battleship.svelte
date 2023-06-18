@@ -22,4 +22,6 @@
 	<Grid rows={r} cols={c} bind:current_selected={top_selected}/>
 	<Menu current_selected={top_selected}/>
 	<Grid rows={r} cols={c}/>
+
+	<div>{r}</div>
 </main>

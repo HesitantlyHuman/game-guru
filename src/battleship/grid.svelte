@@ -27,14 +27,9 @@
 			current_selected = [row,col];
 		}
 	}
-
-	function selected_state_shaper(){
-		selected_state = Array.from(Array(cols), () => Array(rows).fill(false));
-	}
 	
 	onMount( () => {
-		// selected_state = Array.from(Array(cols), () => Array(rows).fill(false));
-		selected_state_shaper();
+		selected_state = Array.from(Array(cols), () => Array(rows).fill(false));
 	});
 </script>
 
