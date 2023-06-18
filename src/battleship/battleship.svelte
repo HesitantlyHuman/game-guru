@@ -18,10 +18,10 @@
 	<h1>Battleship Galactica</h1>
 	<h2>Welcome to the warzone commander!</h2>
 	
-	<Shaper bind:rows={r} bind:cols={c} reshape='true' resize='true'/>
-	<Grid rows={r} cols={c} bind:current_selected={top_selected}/>
-	<Menu current_selected={top_selected}/>
-	<Grid rows={r} cols={c}/>
-
-	<div>{r}</div>
+	<Shaper bind:rows={r} bind:cols={c} reshape='true'/>
+	{#key [r,c]}
+		<Grid rows={r} cols={c} bind:current_selected={top_selected}/>
+		<Menu current_selected={top_selected}/>
+		<Grid rows={r} cols={c}/>
+	{/key}
 </main>

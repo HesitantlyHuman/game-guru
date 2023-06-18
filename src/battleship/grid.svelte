@@ -2,6 +2,7 @@
 <!-- TODO, make the width of tiles and the whole grid be editable (by css variables that are changed?) -->
 <script>
 	import { onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	
 	import Tile from "./grid_tile.svelte";
 	
@@ -28,8 +29,12 @@
 		}
 	}
 	
-	onMount( () => {
+	onMount(() => {
 		selected_state = Array.from(Array(cols), () => Array(rows).fill(false));
+	});
+
+	onDestroy(() => {
+		current_selected = null;
 	});
 </script>
 
@@ -47,8 +52,6 @@
 	<!-- TODO. Why is the bottom being cut off without this useless div	 -->
 </div>
 <!-- Should I use Array({lendth}) instead of length: {length}? What's the speed difference. TODO -->
-
-<div>{rows} {cols}</div>
 
 <style>
     :root{
