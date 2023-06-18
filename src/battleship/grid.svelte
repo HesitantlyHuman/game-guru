@@ -1,19 +1,18 @@
-<!--  THE GRID IS ORDERED BY COLUMNS THEN BY ROWS!  -->
+<!-- THE GRID IS ORDERED BY COLUMNS THEN BY ROWS!  -->
 <!-- TODO, make the width of tiles and the whole grid be editable (by css variables that are changed?) -->
 <script>
 	import { onMount } from 'svelte';
 	
 	import Tile from "./tile.svelte";
 	
-	// control variables
+	// Control variables
 	export let rows;
 	export let cols;
 	export let reshape = false;
 	export let resize = false;
 	
-	// Interaction variables (TODO create more)
+	// State variables
 	export let current_selected = null; // Row, column of current selected
-	
 	let selected_state = []; // selected_state is referenced [col][row] TODO change to is_selected
 	
 	function click_tile(row, col){
@@ -30,9 +29,14 @@
 			current_selected = [row,col];
 		}
 	}
+
+	function selected_state_shaper(){
+		selected_state = Array.from(Array(cols), () => Array(rows).fill(false));
+	}
 	
 	onMount( () => {
-		selected_state = Array.from(Array(cols), () => Array(rows).fill(false));
+		// selected_state = Array.from(Array(cols), () => Array(rows).fill(false));
+		selected_state_shaper();
 	});
 </script>
 
@@ -55,10 +59,10 @@
 </div>
 
 <div class = "grid_wrapper">
-<!-- 	{#each Array(selected_state.length) as _, col} -->
+	<!-- 	{#each Array(selected_state.length) as _, col} -->
 	{#each selected_state as _, col}
 		<ul class = "columns">
-<!-- 			{#each Array(selected_state[col].length) as _, row} -->
+	<!-- 			{#each Array(selected_state[col].length) as _, row} -->
 			{#each selected_state[col] as _, row}
 				<Tile click_handler={() =>{click_tile(row, col)}} is_selected={selected_state[col][row]}/>
 			{/each}
@@ -68,6 +72,8 @@
 	<!-- TODO. Why is the bottom being cut off without this useless div	 -->
 </div>
 <!-- Should I use Array({lendth}) instead of length: {length}? What's the speed difference. TODO -->
+
+<div>{rows} {cols}</div>
 
 <style>
     :root{
@@ -112,3 +118,5 @@
 	}
 </style>
 <!-- https://www.w3docs.com/snippets/html/how-to-allow-only-positive-numbers-in-the-input-number-type.html -->
+
+<!-- TODO, have grid accept "style types" generically that parents can pass in -->
