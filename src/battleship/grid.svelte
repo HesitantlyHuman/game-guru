@@ -3,7 +3,7 @@
 <script>
 	import { onMount } from 'svelte';
 	
-	import Tile from "./tile.svelte";
+	import Tile from "./grid_tile.svelte";
 	
 	// Control variables
 	export let rows;
