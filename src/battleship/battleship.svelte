@@ -1,6 +1,7 @@
 <script>
 	import Grid from "./grid.svelte";
 	import Menu from "./menu.svelte";
+	import Shaper from "./grid_shaper.svelte"
 
 	let r = 3;
 	let c = 5; // TODO, make this dynamic eventually
@@ -15,8 +16,9 @@
 
 <main>
 	<h1>Battleship Galactica</h1>
-	<h2>Welcome to the warzone commander</h2>
+	<h2>Welcome to the warzone commander!</h2>
 	
+	<Shaper/>
 	<Grid bind:rows={r} bind:cols={c} reshape='true' resize='true' bind:current_selected={top_selected}/>
 	<Menu current_selected={top_selected}/>
 	<Grid rows={r} cols={c}/>
