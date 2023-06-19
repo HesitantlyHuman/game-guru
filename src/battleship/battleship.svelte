@@ -1,6 +1,6 @@
 <script>
 	import Grid from "./grid.svelte";
-	import Menu from "./menu.svelte";
+	import Fire_Menu from "./fireing_menu.svelte";
 	import Shaper from "./grid_shaper.svelte"
 
 	let r = 3;
@@ -21,7 +21,7 @@
 	<Shaper bind:rows={r} bind:cols={c} reshape='true'/>
 	{#key [r,c]}
 		<Grid rows={r} cols={c} bind:current_selected={top_selected}/>
-		<Menu current_selected={top_selected}/>
+		<Fire_Menu current_selected={top_selected}/>
 		<Grid rows={r} cols={c}/>
 	{/key}
 </main>

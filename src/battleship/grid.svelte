@@ -5,12 +5,11 @@
 	
 	import Tile from "./grid_tile.svelte";
 	
-	// Control variables
+	// interface variables
 	export let rows;
 	export let cols;
-	
-	// State variables
 	export let current_selected = null; // Row, column of current selected
+
 	let selected_state = []; // selected_state is referenced [col][row] TODO change to is_selected
 
 	function click_tile(row, col){
@@ -39,7 +38,7 @@
 	{#each selected_state as _, row}
 		<ul class = "row">
 			{#each selected_state[row] as _, col}
-				<Tile click_handler={() =>{click_tile(row, col)}} is_selected={selected_state[row][col]}/>
+				<Tile on_click={() =>{click_tile(row, col)}} is_selected={selected_state[row][col]}/>
 			{/each}
 		</ul>
 	{/each}

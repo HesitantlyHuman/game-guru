@@ -2,7 +2,8 @@
     export let rows;
     export let cols;
     export let reshape = false;
-	// export let resize = false;
+
+	export let on_suggest; // TODO have this function replace the logic here, and be given by "battleship".
 </script>
 
 <div class = options_wrapper>

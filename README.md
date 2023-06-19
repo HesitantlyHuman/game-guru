@@ -49,7 +49,6 @@ function reveal_cell(connection, key) {
 
 
 
-
 NetworkUI
 	Behavior
 
@@ -88,7 +87,7 @@ is_selected (boolean)
 current_state (string) // Change to one of a few predetermined styles
 on_click()
 
-GridSizeSelector
+GridShaper
 	Behavior
 Select row and col
 Show ghost grid
@@ -122,5 +121,6 @@ on_selected_change(ship_id, rotation_integer)
 on_remove_ship(ship_ids)
 on_confirm_board()
 
-Interface:
-- Determine what tile is selected by binding current_selected
+
+
+TODO: Make offer for peer to peer stuff in URL

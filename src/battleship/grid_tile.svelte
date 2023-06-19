@@ -1,13 +1,14 @@
 <script>
-	export let click_handler;
+	export let on_click;
 	export let is_selected;
+    export let current_state; // One of a few predetermined styles. TODO maybe make an enum
 	
-	function handle_click(){
-		click_handler();
-	}
+	// function handle_click(){ // TODO 
+	// 	on_click();
+	// }
 </script>
 
-<button class = {is_selected? "selected": "unselected"} on:click={handle_click}></button>
+<button class = {is_selected? "selected": "unselected"} on:click={on_click()}></button>
 
 <style>
     :root{

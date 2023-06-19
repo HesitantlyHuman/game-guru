@@ -1,5 +1,6 @@
 <script>
   export let current_selected;
+  export let on_action; // Take a parameter like a string (TODO enum later) of valid options. Logic function given by battleship
 </script>
 
 <div>
