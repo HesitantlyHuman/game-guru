@@ -1,4 +1,3 @@
-<!-- THE GRID IS ORDERED BY COLUMNS THEN BY ROWS!  -->
 <!-- TODO, make the width of tiles and the whole grid be editable (by css variables that are changed?) -->
 <script>
 	import { onMount } from 'svelte';
@@ -13,24 +12,22 @@
 	// State variables
 	export let current_selected = null; // Row, column of current selected
 	let selected_state = []; // selected_state is referenced [col][row] TODO change to is_selected
-	
+
 	function click_tile(row, col){
-		console.log(rows);
-		// Change selected_state and current_selected
-		if (selected_state[col][row]){
+		if (selected_state[row][col]){ // If deselecting a tile
 			current_selected = null;
-			selected_state[col][row] = false;
+			selected_state[row][col] = false;
 		}else{
-			selected_state[col][row] = true;
-			if (current_selected !== null){
-				selected_state[current_selected[1]][current_selected[0]] = false;
+			selected_state[row][col] = true;
+			if (current_selected !== null){ // Deselect another selected tile
+				selected_state[current_selected[0]][current_selected[1]] = false; //TODO do some enumeration to explicitly say that [0] and [1] refer to the row and column value respectively
 			}
 			current_selected = [row,col];
 		}
 	}
 	
 	onMount(() => {
-		selected_state = Array.from(Array(cols), () => Array(rows).fill(false));
+		selected_state = Array.from(Array(rows), () => Array(cols).fill(false));
 	});
 
 	onDestroy(() => {
@@ -39,19 +36,16 @@
 </script>
 
 <div class = "grid_wrapper">
-	<!-- 	{#each Array(selected_state.length) as _, col} -->
-	{#each selected_state as _, col}
-		<ul class = "columns">
-	<!-- 			{#each Array(selected_state[col].length) as _, row} -->
-			{#each selected_state[col] as _, row}
-				<Tile click_handler={() =>{click_tile(row, col)}} is_selected={selected_state[col][row]}/>
+	{#each selected_state as _, row}
+		<ul class = "row">
+			{#each selected_state[row] as _, col}
+				<Tile click_handler={() =>{click_tile(row, col)}} is_selected={selected_state[row][col]}/>
 			{/each}
 		</ul>
 	{/each}
 	<div class = "TODO">Logo</div>
 	<!-- TODO. Why is the bottom being cut off without this useless div	 -->
 </div>
-<!-- Should I use Array({lendth}) instead of length: {length}? What's the speed difference. TODO -->
 
 <style>
     :root{
@@ -70,15 +64,13 @@
 
     ul{
         list-style:none;
-        display:inline-block;
-
-        width:2em;
         height:2em;
         margin:5px;
-    }/*TODO, this whole thing needs to be redone. Commenting out this block makes it row by column (which is preferable), also spacing and what not*/
+    }
+	/*TODO, make better spacing eventually*/
 	
-	.columns{
-	/* TODO make column style */
+	.row{
+	/* TODO may use this, if I don't after the final pretty phase then delete it */
 	}
 </style>
 <!-- https://www.w3docs.com/snippets/html/how-to-allow-only-positive-numbers-in-the-input-number-type.html -->
