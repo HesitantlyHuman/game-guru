@@ -1,3 +1,7 @@
+
+# TO RUN
+"npm run dev" in the game-guru directory
+
 # game-guru
 p2p games with cool sovlers
 
@@ -124,3 +128,20 @@ on_confirm_board()
 
 
 TODO: Make offer for peer to peer stuff in URL
+
+
+# Comments
+	Every comment should have one purpose, (make multiple commments if multiple points need to be made)
+
+	TODO's:
+	- TODO statments must contain the exact string "TODO" in them (case sensitive)
+	- TODO statments all need a description of what is needed, and the motivation (there must be enough context for someone else to impliment the change)
+
+	READABILITY COMMENTS:
+	- It is encouraged to add comments to describe non-obvious behavior (such as mathematical/algorithmic principles, unsatisfiable conditions, etc). These should describe the implicit behavior.
+	- All code that violates convention needs to have an explanation for why it's violating convention
+	- Avoid adding needless comments, refactor the code for readability instead if possible
+	- If there are less than 10 items, avoid using comments just to categorize them
+	
+	DOCUMENTATION COMMENTS:
+	- TODO look at docstrings

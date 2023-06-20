@@ -1,32 +1,31 @@
-<!-- TODO, make the width of tiles and the whole grid be editable (by css variables that are changed?) -->
 <script>
 	import { onMount } from 'svelte';
 	import { onDestroy } from 'svelte';
 	
 	import Tile from "./grid_tile.svelte";
 	
-	// interface variables
 	export let rows;
 	export let cols;
-	export let current_selected = null; // Row, column of current selected
 
-	let selected_state = []; // selected_state is referenced [col][row] TODO change to is_selected
+	// Keep track of selecting grid elements
+	export let current_selected = null; // [Row, Col] of currently selected cell
+	let is_selected = []; // 2D array representing if every cell is selected or not
 
 	function click_tile(row, col){
-		if (selected_state[row][col]){ // If deselecting a tile
+		if (is_selected[row][col]){ // If deselecting a tile
 			current_selected = null;
-			selected_state[row][col] = false;
+			is_selected[row][col] = false;
 		}else{
-			selected_state[row][col] = true;
+			is_selected[row][col] = true;
 			if (current_selected !== null){ // Deselect another selected tile
-				selected_state[current_selected[0]][current_selected[1]] = false; //TODO do some enumeration to explicitly say that [0] and [1] refer to the row and column value respectively
+				is_selected[current_selected[0]][current_selected[1]] = false; //TODO do some enumeration to explicitly say that [0] and [1] refer to the row and column value respectively
 			}
 			current_selected = [row,col];
 		}
 	}
 	
 	onMount(() => {
-		selected_state = Array.from(Array(rows), () => Array(cols).fill(false));
+		is_selected = Array.from(Array(rows), () => Array(cols).fill(false));
 	});
 
 	onDestroy(() => {
@@ -35,10 +34,10 @@
 </script>
 
 <div class = "grid_wrapper">
-	{#each selected_state as _, row}
+	{#each is_selected as _, row}
 		<ul class = "row">
-			{#each selected_state[row] as _, col}
-				<Tile on_click={() =>{click_tile(row, col)}} is_selected={selected_state[row][col]}/>
+			{#each is_selected[row] as _, col}
+				<Tile on_click={() =>{click_tile(row, col)}} is_selected={is_selected[row][col]}/>
 			{/each}
 		</ul>
 	{/each}

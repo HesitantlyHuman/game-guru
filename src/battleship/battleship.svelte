@@ -25,3 +25,13 @@
 		<Grid rows={r} cols={c}/>
 	{/key}
 </main>
+
+<style>
+	:root{
+		--background_color: #c0641d;
+	}
+
+	main{
+		background: var(--background_color);
+	}
+</style>
