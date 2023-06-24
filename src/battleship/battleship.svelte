@@ -29,6 +29,7 @@
 <style>
 	:root{
 		--background_color: #c0641d;
+		/* Use the 6 or 8 value hex syntax for colors */
 	}
 
 	main{

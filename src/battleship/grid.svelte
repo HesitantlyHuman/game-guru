@@ -1,3 +1,4 @@
+<!-- TODO. Grid needs to pass style guidlines to grid_tile -->
 <script>
 	import { onMount } from 'svelte';
 	import { onDestroy } from 'svelte';
