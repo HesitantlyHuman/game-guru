@@ -1,15 +1,13 @@
 <script>
 	export let on_click;
-	export let is_selected;
-    export let tile_style; // One of a few predetermined styles. TODO maybe make an enum
+	export let state;
 	
-    function determine_class(is_selected, current_state){ // TODO would it be more performant to have svelte if blocks define button with a selected class or no class?
-        return is_selected? "selected ": "";
+    function determine_class(state){
+        return (state.selected? "selected ": "") + (state.ship? "ship " : "") + (state.shot? "shot" : "");
     }
-    // TODO should I pass in selected style specifications with tile_style, and forgo the whole class thing inside grid_tile?
 </script>
 
-<button class = {determine_class(is_selected)} on:click={on_click()} style={tile_style}></button>
+<button class = {determine_class(state)} on:click={on_click()}></button>
 
 <style>
     :root{
@@ -53,22 +51,21 @@
             outline: var(--hover_outline);
         }
 
+    /* State classes */
     .selected{ /* This should only change border so it doesn't interfere with the other visual classes*/
         outline: var(--selected_outline);
     }
 
-
-    /* Predetermined styles, should change things other than what the selection classes change (TODO current_state should be a string that is one of these.  Make enum later)*/
-    /*  */
     .ship{
         border-radius: var(--ship_radius);
     }
     
-    .miss{
+    .shot:not(.ship){ /* miss */
         background: var(--miss_background);
     }
 
-    .hit{
+    .shot.ship{ /* hit */
         background: var(--hit_background);
     }
+
 </style>

@@ -8,25 +8,30 @@
 	export let rows;
 	export let cols;
 
-	// Keep track of selecting grid elements
-	export let current_selected = null; // [Row, Col] of currently selected cell
-	let is_selected = []; // 2D array representing if every cell is selected or not
+	// State managers
+	export let current_selected = null; // [Row, Col] of currently selected cell. TODO remove logic here, just return values on click and let parent handle the logic? In order to generalize it more
+	let state_manager = []; // Array the size of the grid, filled with State_dict instances
+	function State_dict(selected=false, ship=false, shot=false){
+		this.selected = selected;
+		this.ship = ship;
+		this.shot = shot;
+	}
 
 	function click_tile(row, col){
-		if (is_selected[row][col]){ // If deselecting a tile
+		if (state_manager[row][col].selected){ // Selecting an already selected tile -> deselects it
 			current_selected = null;
-			is_selected[row][col] = false;
+			state_manager[row][col].selected = false;
 		}else{
-			is_selected[row][col] = true;
-			if (current_selected !== null){ // Deselect another selected tile
-				is_selected[current_selected[0]][current_selected[1]] = false; //TODO do some enumeration to explicitly say that [0] and [1] refer to the row and column value respectively
+			state_manager[row][col].selected = true;
+			if (current_selected !== null){ // If something else is selected, it's deselected
+				state_manager[current_selected[0]][current_selected[1]].selected = false; //TODO explicitly say that [0] and [1] refer to the row and column. Maybe make a dict?
 			}
 			current_selected = [row,col];
 		}
 	}
 	
 	onMount(() => {
-		is_selected = Array.from(Array(rows), () => Array(cols).fill(false));
+		state_manager = Array.from(Array(rows), () => Array.from(Array(cols), () => new State_dict));
 	});
 
 	onDestroy(() => {
@@ -35,15 +40,15 @@
 </script>
 
 <div class = "grid_wrapper">
-	{#each is_selected as _, row}
+	{#each state_manager as _, row}
 		<ul class = "row">
-			{#each is_selected[row] as _, col}
-				<Tile on_click={() =>{click_tile(row, col)}} is_selected={is_selected[row][col]}/>
+			{#each state_manager[row] as _, col}
+				<Tile on_click={() =>{click_tile(row, col)}} state={state_manager[row][col]}/>
 			{/each}
 		</ul>
 	{/each}
 	<div class = "TODO">Logo</div>
-	<!-- TODO. Why is the bottom being cut off without this useless div	 -->
+	<!-- TODO. Why is the bottom being cut off without this useless div? Make it a feature with a logo?	 -->
 </div>
 
 <style>
