@@ -1,14 +1,38 @@
+<!-- TODO if we ever add extreme additions to the game (like nukes, etc), have confirm be a popup? "confirm()"?-->
+
 <script>
   export let current_selected;
-  export let on_action; // Take a parameter like a string (TODO enum later) of valid options. Logic function given by battleship
+  export let actions; // Array of 2 celled arrays, where each sub array is [action name, function it performs].
+
+  let action_keys = Object.keys();
 </script>
 
 <div>
-  <p>
-      Current selected is {current_selected}
-  </p>
+  <h2>Selected index: {current_selected}</h2>
+  {#key current_selected}
+    <ul>
+      {#each actions as [action, func]}
+        <div class="display_action">
+          <span class="action_description">{action}</span>
+          <button class="action_button" on:click()={func()}></button> <!-- TODO add a confirmation (preferable something simple like the button itself changing to "confirm?") -->
+        </div>
+      {/each}
+    </ul>
+  {/key}
 </div>
 
+<style>
+  .display_action{
+    display: flex;
+  }
+
+  .action_description, .action_button{
+    flex: 1 1;
+  }
+</style>
+
+
+<!-- TODO cosmetics, make pretty container? -->
 <!-- <div id="menu-container">
   {#if menuVisible}
     <div id="menu" style="left: {menuPosition.x}px; top: {menuPosition.y}px;">
