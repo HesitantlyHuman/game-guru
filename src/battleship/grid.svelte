@@ -47,7 +47,7 @@
 			{/each}
 		</ul>
 	{/each}
-	<div class = "TODO">Logo</div>
+	<!-- <div class = "TODO">Logo</div> -->
 	<!-- TODO. Why is the bottom being cut off without this useless div? Make it a feature with a logo?	 -->
 </div>
 
@@ -58,7 +58,9 @@
 
     .grid_wrapper{
         /* margin-left:20%;*/
-        margin-top:0.3em;
+        /* margin-top:0.3em; */
+		/* border-bottom: 1em; */
+		padding-bottom: 0.1em;
         display:block;
 
         background: var(--grid_background); /*TODO make this match battleship background*/

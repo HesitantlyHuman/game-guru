@@ -1,20 +1,17 @@
 <script>
     export let rows;
     export let cols;
-    export let reshape = false;
-
-	export let on_suggest; // TODO have this function replace the logic here, and be given by "battleship".
+	export let on_shape_change;
 </script>
 
 <div class = options_wrapper>
-	{#if reshape}
-		<div class="reshape">
-			<span>Rows</span>
-			<input bind:value={rows} type="number" min="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
-			<span>&nbsp;Cols</span>
-			<input bind:value={cols} type="number" min="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
-		</div>
-	{/if}
+	<div class="reshape">
+		<span>Rows</span>
+		<input bind:value={rows} type="number" min="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+		<span>&nbsp;Cols</span>
+		<input bind:value={cols} type="number" min="1" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+		<button on:click={on_shape_change(rows,cols)}>Confirm</button>
+	</div>
 	
 	<!-- {#if resize}
 		<div class="resize">
@@ -36,6 +33,10 @@
 	}
 
 	input[type="number"] {
-	width: 60px;
+		width: 4em;
+	}
+
+	button{
+		margin-left: 1em;
 	}
 </style>
