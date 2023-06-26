@@ -2,9 +2,7 @@
 
 <script>
   export let current_selected;
-  export let actions; // Array of 2 celled arrays, where each sub array is [action name, function it performs].
-
-  let action_keys = Object.keys();
+  export let actions = []; // Array of 2 celled arrays, where each sub array is [action name, function it performs]. TODO make this a dictionary and then iterate via Object.entries? Would that be better?
 </script>
 
 <div>
@@ -14,12 +12,13 @@
       {#each actions as [action, func]}
         <div class="display_action">
           <span class="action_description">{action}</span>
-          <button class="action_button" on:click()={func()}></button> <!-- TODO add a confirmation (preferable something simple like the button itself changing to "confirm?") -->
+          <button class="action_button" on:click()={func()}></button>
         </div>
       {/each}
     </ul>
   {/key}
 </div>
+<!-- TODO add a confirmation (preferable something simple like the button itself changing to "confirm?") to the action button -->
 
 <style>
   .display_action{

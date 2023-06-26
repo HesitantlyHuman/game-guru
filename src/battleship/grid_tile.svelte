@@ -15,7 +15,7 @@
         --default_radius: 50%;
         --default_width: 2em;
         --default_height: 2em;
-        --default_margin: 5px;
+        --default_margin: 0.4em;
         --default_cursor: pointer; /*TODO-pretty make this different? This is a temprorary choice*/
 
         --hover_outline: cyan solid medium; /*outline-color | outline-style | outline-width. https://developer.mozilla.org/en-US/docs/Web/CSS/outline*/
