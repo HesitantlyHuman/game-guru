@@ -56,17 +56,41 @@
             return render_270(ship);
         }
     }
+
+    function calculate_width_and_height(ship, rotation) {
+        if (!ship) {
+            return [100, 100];
+        }
+
+        let largest_dim = Math.max(ship.length, ship[0].length);
+        let width = 100 * (ship[0].length / largest_dim);
+        let height = 100 * (ship.length / largest_dim);
+        if (rotation % 2 == 1) {
+            return [height, width];
+        } else {
+            return [width, height];
+        }
+    }
+
+    $: [width, height] = calculate_width_and_height(ship, rotation);
 </script>
 
-<table class="ship" cellpadding="0" cellspacing="0">
-    {#each display_ship as row}
-        <tr class="ship-row">
-            {#each row as col}
-                <td class={col ? "tile ship-tile" : "tile empty-tile"} />
-            {/each}
-        </tr>
-    {/each}
-</table>
+<div class="ship-container">
+    <table
+        class="ship"
+        cellpadding="0"
+        cellspacing="0"
+        style="width:{width}%;height:{height}%"
+    >
+        {#each display_ship as row}
+            <tr class="ship-row">
+                {#each row as col}
+                    <td class={col ? "tile ship-tile" : "tile empty-tile"} />
+                {/each}
+            </tr>
+        {/each}
+    </table>
+</div>
 
 <style>
     .ship-tile {
@@ -79,6 +103,12 @@
 
     .ship {
         table-layout: fixed;
+    }
+
+    .ship-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         height: 100%;
     }
