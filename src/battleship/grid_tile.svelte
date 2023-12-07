@@ -1,16 +1,32 @@
 <script>
-	export let on_click;
-	export let state;
-	
-    function determine_class(state){
-        return (state.selected? "selected ": "") + (state.ship? "ship " : "") + (state.shot? "shot" : "");
+    export let on_click;
+    export let state;
+
+    export let hovered = false;
+
+    function determine_class(state) {
+        return (
+            (state.selected ? "selected " : "") +
+            (state.ship ? "ship " : "") +
+            (state.shot ? "shot" : "")
+        );
     }
 </script>
 
-<button class = {determine_class(state)} on:click={on_click()}></button>
+<button
+    class:hovered
+    on:click={on_click()}
+    on:mouseenter={() => {
+        hovered = true;
+    }}
+    on:mouseleave={() => {
+        hovered = false;
+    }}
+>
+</button>
 
 <style>
-    :root{
+    :root {
         --default_background: #ccc;
         --default_radius: 50%;
         --default_width: 2em;
@@ -21,10 +37,10 @@
         --hover_outline: cyan solid medium; /*outline-color | outline-style | outline-width. https://developer.mozilla.org/en-US/docs/Web/CSS/outline*/
         --selected_outline: red solid medium;
 
-        --ship_radius:0%;
+        --ship_radius: 0%;
 
-        --miss_background: #F5F5F4;
-        --hit_background: #AA4A44;
+        --miss_background: #f5f5f4;
+        --hit_background: #aa4a44;
 
         /* No longer needed variables */
         /* --hover_outline_color: red;
@@ -35,7 +51,7 @@
         /* --selected_radius: 0%; */
     }
 
-    button{
+    button {
         width: var(--default_width);
         height: var(--default_height);
         margin: var(--default_margin);
@@ -45,27 +61,30 @@
 
         cursor: var(--default_cursor);
     }
-        button:hover{
-            /* outline-style: var(--hover_outline_style);
+    .hovered {
+        /* outline-style: var(--hover_outline_style);
             outline-color: var(--hover_outline_color); */
-            outline: var(--hover_outline);
-        }
+        outline: var(--hover_outline);
+        background-color: red;
+    }
 
     /* State classes */
-    .selected{ /* This should only change border so it doesn't interfere with the other visual classes*/
+    .selected {
+        /* This should only change border so it doesn't interfere with the other visual classes*/
         outline: var(--selected_outline);
     }
 
-    .ship{
+    .ship {
         border-radius: var(--ship_radius);
     }
-    
-    .shot:not(.ship){ /* miss */
+
+    .shot:not(.ship) {
+        /* miss */
         background: var(--miss_background);
     }
 
-    .shot.ship{ /* hit */
+    .shot.ship {
+        /* hit */
         background: var(--hit_background);
     }
-
 </style>
