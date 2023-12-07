@@ -14,7 +14,7 @@
 </script>
 
 <button
-    class:hovered
+    class={determine_class(state)}
     on:click={on_click()}
     on:mouseenter={() => {
         hovered = true;
@@ -61,16 +61,10 @@
 
         cursor: var(--default_cursor);
     }
-    .hovered {
-        /* outline-style: var(--hover_outline_style);
-            outline-color: var(--hover_outline_color); */
-        outline: var(--hover_outline);
-    }
-
     button:hover {
         /* outline-style: var(--hover_outline_style);
             outline-color: var(--hover_outline_color); */
-        background-color: red;
+        outline: var(--hover_outline);
     }
 
     /* State classes */
