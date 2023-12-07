@@ -8,7 +8,7 @@
         return (
             (state.selected ? "selected " : "") +
             (state.ship ? "ship " : "") +
-            (state.shot ? "shot" : "")
+            (state.shot ? "shot" : "") // No space after the last class for formatting reasons
         );
     }
 </script>
