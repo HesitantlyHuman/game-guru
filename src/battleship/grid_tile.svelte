@@ -65,6 +65,11 @@
         /* outline-style: var(--hover_outline_style);
             outline-color: var(--hover_outline_color); */
         outline: var(--hover_outline);
+    }
+
+    button:hover {
+        /* outline-style: var(--hover_outline_style);
+            outline-color: var(--hover_outline_color); */
         background-color: red;
     }
 
