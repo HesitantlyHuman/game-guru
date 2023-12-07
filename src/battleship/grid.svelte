@@ -23,7 +23,7 @@
 			state_manager[row][col].selected = false;
 		}else{
 			state_manager[row][col].selected = true;
-			if (current_selected !== null){ // If something else is selected, it's deselected
+			if (current_selected !== null){ // deselect any other tile that's already selected
 				state_manager[current_selected[0]][current_selected[1]].selected = false; //TODO explicitly say that [0] and [1] refer to the row and column. Maybe make a dict?
 			}
 			current_selected = [row,col];
