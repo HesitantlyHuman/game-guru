@@ -18,6 +18,36 @@
 	 TODO:
 	 - Deselect something when an action is taken
 	*/
+	let ships = {
+		"ship-1": [
+			[1, 1, 0],
+			[0, 1, 0],
+			[0, 1, 1],
+		],
+		"ship-2": [
+			[1, 0, 0],
+			[1, 0, 0],
+			[1, 1, 1],
+		],
+		"ship-3": [[1], [1]],
+		"ship-4": [
+			[1, 0],
+			[1, 1],
+			[0, 1],
+			[0, 1],
+		],
+	};
+	let is_placed = {
+		"ship-1": false,
+		"ship-2": false,
+		"ship-3": false,
+		"ship-4": false,
+	};
+	let selected_ship_id = null;
+
+	function select_ship(ship_id) {
+		selected_ship_id = ship_id;
+	}
 </script>
 
 <main>
@@ -31,19 +61,16 @@
 		<Grid rows={r} cols={c} />
 	{/key}
 	<ShipPlacementMenu
-		ships={{
-			"ship-1": [
-				[1, 1, 0],
-				[0, 1, 0],
-				[0, 1, 1],
-			],
-			"ship-2": [
-				[1, 0, 0],
-				[1, 0, 0],
-				[1, 1, 1],
-			],
+		{ships}
+		{is_placed}
+		on_remove_ship={(ship_id) => {
+			is_placed[ship_id] = false;
+		}}
+		on_selected_change={(ship_id, rotation) => {
+			select_ship(ship_id);
 		}}
 	/>
+	<button on:click={() => (is_placed[selected_ship_id] = true)}>Place</button>
 </main>
 
 <style>
