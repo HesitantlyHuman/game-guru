@@ -18,6 +18,7 @@
 	 TODO:
 	 - Deselect something when an action is taken
 	*/
+	// TODO read "game guru" google doc for specs
 	let ships = {
 		"ship-1": [
 			[1, 1, 0],
