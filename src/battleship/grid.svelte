@@ -31,7 +31,7 @@
 	}
 	
 	onMount(() => {
-		state_manager = Array.from(Array(rows), () => Array.from(Array(cols), () => new State_dict));
+		state_manager = Array.from(Array(rows), () => Array.from(Array(cols), () => new State_dict)); // Initialize multi dimensional array in javascript
 	});
 
 	onDestroy(() => {
